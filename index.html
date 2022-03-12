@@ -10,18 +10,26 @@
 <script type="text/babel">
 
     function App() {
-        const [munutes, setMinutes] = React.useState();
+        const [munutes, setMinutes] = React.useState(0);
         const onChange = (event) => {
             setMinutes(event.target.value);
         };
+        const reset = (event) => {
+            setMinutes(0);
+        };
+
         return (
             <div>
                 <h1>Super Converter</h1>
-                <label for="minutes">Minutes</label>
-                <input value={munutes} id="minutes" placeholder="Minutes" type="number" onChange={onChange} />
-                <h4>You want to convert {munutes}</h4>
-                <label for="Hours">Minutes</label>
-                <input id="Hours" placeholder="Hours" type="number" />
+                <div>
+                    <label for="minutes">Minutes</label>
+                    <input value={munutes} id="minutes" placeholder="Minutes" type="number" onChange={onChange} />
+                </div>
+                <div>
+                    <label for="Hours">Minutes</label>
+                    <input value={Math.round(munutes / 60)} id="Hours" placeholder="Hours" type="number" />
+                </div>
+                <button onClick={reset}>Reset</button>
             </div>
         );
     }
