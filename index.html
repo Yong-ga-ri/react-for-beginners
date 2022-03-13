@@ -2,37 +2,44 @@
 <html>
 
 <body>
-    <div id="root"></div>
+	<div id="root"></div>
 </body>
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-    function Btn({ text, big }) {
-        return <button
-            style={{
-                backgroundColor: "tomato",
-                color: "white",
-                padding: "10px 20px",
-                border: 0,
-                borderRadius: 10,
-                fontSize: big ? 18 : 16,
-            }}
-        >
-            {text}
-        </button>;
-    }
-    function App() {
-        return (
-            <div>
-                <Btn text="Save Changes" big={true} />
-                <Btn text="Continues" big={false} />
-            </div>
-        );
-    }
+	function Btn({ text, OnClick }) {
+		console.log(text, "was rendered");
+		return (
+			<button
+				onClick={OnClick}
+				style={{
+					backgroundColor: "tomato",
+					color: "white",
+					padding: "10px 20px",
+					border: 0,
+					borderRadius: 10,
+				}}
+			>
+				{text}
+			</button>
 
-    const root = document.getElementById("root");
-    ReactDOM.render(<App />, root);
+		);
+	}
+	const MemorizedBtn = React.memo(Btn)
+	function App() {
+		const [value, setValue] = React.useState("Save Changes");
+		const changeValue = () => setValue("Revert Changes");
+		return (
+			<div>
+				<MemorizedBtn text={value} OnClick={changeValue} />
+				<MemorizedBtn text="Continues" />
+			</div>
+		);
+	}
+
+	const root = document.getElementById("root");
+	ReactDOM.render(<App />, root);
 </script>
 
 </html>
